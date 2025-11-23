@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background: #f8f9fa; padding: 20px; border-radius: 5px; }
+        .content { padding: 20px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Late Arrival Notification</h2>
+        </div>
+        <div class="content">
+            <p>Hello Team,</p>
+            <p>I wanted to inform you that I will be arriving approximately <strong>{{ delay_time }} minutes late</strong> today.</p>
+            <p><strong>Reason:</strong> {{ reason }}</p>
+            <p>I apologize for any inconvenience and will update you if the situation changes.</p>
+            <br>
+            <p>Best regards,<br>{{ user_email }}</p>
+        </div>
+    </div>
+</body>
+</html>

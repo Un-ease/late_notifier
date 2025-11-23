@@ -1,0 +1,58 @@
+{% extends 'notification/base.html' %}  <!-- FIXED THIS LINE -->
+
+{% block content %}
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h2 class="mb-0">Late Arrival Notifier</h2>
+    </div>
+    <div class="card-body">
+        <form method="post" id="lateForm">
+            {% csrf_token %}
+            
+            <div class="mb-3">
+                <label for="delay_time" class="form-label">How late will you be?</label>
+                <select name="delay_time" id="delay_time" class="form-select" required>
+                    <option value="">Select delay time</option>
+                    <option value="10">10 minutes</option>
+                    <option value="15">15 minutes</option>
+                    <option value="20">20 minutes</option>
+                    <option value="30">30 minutes</option>
+                    <option value="45">45 minutes</option>
+                    <option value="60">1 hour</option>
+                    <option value="0">Custom time</option>
+                </select>
+            </div>
+
+            <div class="mb-3" id="customTimeGroup" style="display: none;">
+                <label for="custom_time" class="form-label">Custom time (minutes):</label>
+                <input type="number" name="custom_time" id="custom_time" class="form-control" min="1" max="240">
+            </div>
+
+            <div class="mb-3">
+                <label for="reason" class="form-label">Reason (optional):</label>
+                <input type="text" name="reason" id="reason" class="form-control" placeholder="e.g., Traffic, train delay, etc.">
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg w-100">Send Late Notification</button>
+        </form>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const delaySelect = document.getElementById('delay_time');
+    const customTimeGroup = document.getElementById('customTimeGroup');
+    const customTimeInput = document.getElementById('custom_time');
+    
+    delaySelect.addEventListener('change', function() {
+        if (this.value === '0') {
+            customTimeGroup.style.display = 'block';
+            customTimeInput.required = true;
+        } else {
+            customTimeGroup.style.display = 'none';
+            customTimeInput.required = false;
+        }
+    });
+});
+</script>
+{% endblock %}
