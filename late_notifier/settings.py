@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure--4cn9c4=bqhigsqkqw2180@gf*%7fn_&2ol$6+ga@j9l2#u+hp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['late-notifier.onrender.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
