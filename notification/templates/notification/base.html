@@ -23,6 +23,20 @@
     </style>
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'notification:index' %}">Late Notifier</a>
+        
+        <div class="navbar-nav ms-auto">
+            {% if user.is_authenticated %}
+                <span class="navbar-text me-3">Welcome, {{ user.username }}</span>
+                <a class="nav-link" href="{% url 'notification:logout' %}">Logout</a>
+            {% else %}
+                <a class="nav-link" href="{% url 'notification:login' %}">Login</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>
     <div class="container">
         {% if messages %}
             {% for message in messages %}

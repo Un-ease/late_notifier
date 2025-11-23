@@ -1,3 +1,6 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 from django.shortcuts import render, redirect
 from django.conf import settings
 from django.core.mail import EmailMessage
@@ -7,6 +10,7 @@ from .forms import LateNotificationForm
 from .models import LateNotification
 import json
 
+@login_required
 def send_late_email(delay_time, reason, custom_time=None):
     """Send late arrival email"""
     actual_delay = custom_time if custom_time else delay_time
@@ -39,6 +43,7 @@ def send_late_email(delay_time, reason, custom_time=None):
     
     return email.send()
 
+@login_required
 def index(request):
     if request.method == 'POST':
         form = LateNotificationForm(request.POST)
@@ -65,5 +70,6 @@ def index(request):
     
     return render(request, 'notification/index.html', {'form': form})
 
+@login_required
 def success(request):
     return render(request, 'notification/success.html')
