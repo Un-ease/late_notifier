@@ -68,7 +68,7 @@ def index(request):
             # Send email in background (non-blocking)
             send_late_email_async(delay_time, reason, custom_time)
             
-            # Mark as sent immediately (you could update this later with a callback)
+            # Mark as sent immediately
             notification.email_sent = True
             notification.save()
             
@@ -79,3 +79,8 @@ def index(request):
             messages.error(request, f'Error: {e}')
     
     return render(request, 'notification/index.html')
+
+@login_required
+def success(request):
+    """Success page after sending notification"""
+    return render(request, 'notification/success.html')
