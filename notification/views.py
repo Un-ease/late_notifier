@@ -10,7 +10,7 @@ from .forms import LateNotificationForm
 from .models import LateNotification
 import json
 
-@login_required
+#@login_required
 def send_late_email(delay_time, reason, custom_time=None, username=None):
     """Send late arrival email"""
     from django.conf import settings
@@ -20,14 +20,14 @@ def send_late_email(delay_time, reason, custom_time=None, username=None):
     actual_delay = custom_time if custom_time else delay_time
     
     # Use the username or fallback to email user
-    user_display = username if username else "User"
+   # user_display = username if username else "User"
     
     subject = f"Late Arrival Notification - {actual_delay} minutes"
     
     context = {
         'delay_time': actual_delay,
         'reason': reason or 'No reason provided',
-        'user_email': user_display  # Simple fix - just use username
+        #'user_email': user_display  # Simple fix - just use username
     }
     
     html_message = render_to_string('notification/email_template.html', context)
