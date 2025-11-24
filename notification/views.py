@@ -11,7 +11,7 @@ from .models import LateNotification
 import json
 
 @login_required
-def send_late_email(delay_time, reason, custom_time=None, request=None):
+def send_late_email(delay_time, reason, custom_time=None, username=None):
     """Send late arrival email"""
     from django.conf import settings
     from django.core.mail import EmailMessage
@@ -19,15 +19,15 @@ def send_late_email(delay_time, reason, custom_time=None, request=None):
     
     actual_delay = custom_time if custom_time else delay_time
     
-    # Get the user's email - FIXED THIS PART
-    user_email = request.user.email if request and request.user.is_authenticated else settings.EMAIL_HOST_USER
+    # Use the username or fallback to email user
+    user_display = username if username else "User"
     
     subject = f"Late Arrival Notification - {actual_delay} minutes"
     
     context = {
         'delay_time': actual_delay,
         'reason': reason or 'No reason provided',
-        'user_email': user_email  # Now this should work
+        'user_email': user_display  # Simple fix - just use username
     }
     
     html_message = render_to_string('notification/email_template.html', context)
@@ -60,8 +60,8 @@ def index(request):
             return render(request, 'notification/index.html')
         
         try:
-            # FIX: Pass the request to send_late_email
-            send_late_email(delay_time, reason, custom_time, request)
+            # SIMPLE FIX: Just pass the username
+            send_late_email(delay_time, reason, custom_time, request.user.username)
             messages.success(request, 'Late notification sent successfully!')
             return redirect('notification:success')
             
